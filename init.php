@@ -13,6 +13,11 @@ class YoutubeFrames extends Plugin {
 		$this->host = $host;
 
 		$host->add_hook($host::HOOK_ARTICLE_FILTER, $this);
+		$host->add_hook($host::HOOK_IFRAME_WHITELISTED, $this);
+	}
+
+	function hook_iframe_whitelisted($src) {
+		return in_array($src, ["www.youtube.com", "youtube.com", "youtu.be"]);
 	}
 
 	function hook_article_filter($article) {
