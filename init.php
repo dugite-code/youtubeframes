@@ -24,33 +24,20 @@ class YoutubeFrames extends Plugin {
 
 		// Basic link matching
 		if ( strpos($article["link"], "youtube.com") !==false ){
-			$domDocument = new DOMDocument();
-			$domElement = $domDocument->createElement("iframe","");
+                        $domDocument = new DOMDocument();
+                        $domElement = $domDocument->createElement("div","");
+                        $newnode = $domDocument->appendChild($domElement);
 
-			// Add width attribute
-			$domAttribute = $domDocument->createAttribute('width');
-			$domAttribute->value = '640';
-			$domElement->appendChild($domAttribute);
+                           // Get video ID from link
+                        $urlparts = explode("v=", $article["link"]);
+                        $embed_link = "https://www.youtube.com/embed/".$urlparts[1];
 
-			// Add height attribute
-			$domAttribute = $domDocument->createAttribute('height');
-			$domAttribute->value = '360';
-			$domElement->appendChild($domAttribute);
+                        // Add src attribute
+                        $newnode->setAttribute("src", $embed_link);
 
-			// Get video ID from link
-			$urlparts = explode("v=", $article["link"]);
-			$embed_link = "https://www.youtube.com/embed/".$urlparts[1];
+                        // Save domDocument as html and replace article content
+                        $article["content"] = $domDocument->saveHTML();
 
-			// Add src attribute
-			$domAttribute = $domDocument->createAttribute('src');
-			$domAttribute->value =  $embed_link;
-			$domElement->appendChild($domAttribute);
-
-			// Add iframe to domDocument
-			$domDocument->appendChild($domElement);
-
-			// Save domDocument as html and replace article content
-			$article["content"] = $domDocument->saveHTML();
 
 		}
 
