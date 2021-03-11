@@ -17,7 +17,7 @@ class YoutubeFrames extends Plugin {
 	}
 
 	function hook_iframe_whitelisted($src) {
-		return in_array($src, ["www.youtube.com", "youtube.com", "youtu.be", "youtube-nocookie.com"]);
+		return in_array($src, ["www.youtube.com", "youtube.com", "youtu.be", "youtube-nocookie.com", "www.youtube-nocookie.com"]);
 	}
 
 	function hook_article_filter($article) {
@@ -35,8 +35,6 @@ class YoutubeFrames extends Plugin {
 			// Add src attribute
 			$newnode->setAttribute("src", $embed_link);
 			$newnode->setAttribute("frameborder", "0");
-			$newnode->setAttribute("allow", "encrypted-media; picture-in-picture");
-
 			// Save domDocument as html and replace article content
 			$article["content"] = $domDocument->saveHTML();
 
