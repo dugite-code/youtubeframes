@@ -24,21 +24,21 @@ class YoutubeFrames extends Plugin {
 
 		// Basic link matching
 		if ( strpos($article["link"], "youtube.com") !==false ){
-      $domDocument = new DOMDocument();
-      $domElement = $domDocument->createElement("iframe","");
-      $newnode = $domDocument->appendChild($domElement);
+			$domDocument = new DOMDocument();
+			$domElement = $domDocument->createElement("iframe","");
+			$newnode = $domDocument->appendChild($domElement);
 
-      // Get video ID from link
-      $urlparts = explode("v=", $article["link"]);
-      $embed_link = "https://www.youtube-nocookie.com/embed/".$urlparts[1];
+			// Get video ID from link
+			$urlparts = explode("v=", $article["link"]);
+			$embed_link = "https://www.youtube-nocookie.com/embed/".$urlparts[1];
 
-      // Add src attribute
-      $newnode->setAttribute("src", $embed_link);
+			// Add src attribute
+			$newnode->setAttribute("src", $embed_link);
 			$newnode->setAttribute("frameborder", "0");
 			$newnode->setAttribute("allow", "encrypted-media; picture-in-picture");
 
-      // Save domDocument as html and replace article content
-      $article["content"] = $domDocument->saveHTML();
+			// Save domDocument as html and replace article content
+			$article["content"] = $domDocument->saveHTML();
 
 
 		}
